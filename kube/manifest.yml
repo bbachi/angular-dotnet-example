@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: angular-webapp
+  name: angular-webapp
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: angular-webapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: angular-webapp
+    spec:
+      containers:
+      - image: docker.io/bbachin1/angular-dotnet-webapp
+        name: webapp
+        imagePullPolicy: Always
+        resources: {}
+        ports:
+          - containerPort: 80 
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: angular-webapp
+  labels:
+    run: angular-webapp
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: angular-webapp
+  type: NodePort
